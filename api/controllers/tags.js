@@ -18,7 +18,7 @@ exports.tags_get_all = (req, res, next) => {
       };
       if (result) {
         const orderedResponse = response.tags.sort((a, b) => {
-          if (a.name < b.name) {
+          if (a.name.toUpperCase() < b.name.toUpperCase()) {
             return -1;
           }
         });
