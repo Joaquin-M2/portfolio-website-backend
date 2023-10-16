@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const TagModel = require('../models/tag');
+const mongoose = require("mongoose");
+const TagModel = require("../models/tag");
 
 exports.tags_get_all = (req, res, next) => {
   TagModel.find()
@@ -11,15 +11,21 @@ exports.tags_get_all = (req, res, next) => {
           _id: tag._id,
           name: tag.name,
           request: {
-            type: 'GET',
+            type: "GET",
             url: `http://localhost:3000/tags/${tag._id}`,
           },
         })),
       };
       if (result) {
+        const orderedResponse = response.tags.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+        });
+        console.log(orderedResponse);
         res.status(200).json(response);
       } else {
-        res.status(404).json({ message: 'Requested tag ID does not exist.' });
+        res.status(404).json({ message: "Requested tag ID does not exist." });
       }
     })
     .catch((error) => {
@@ -37,12 +43,12 @@ exports.tags_create_tag = (req, res, next) => {
     .save()
     .then((result) => {
       res.status(201).json({
-        message: 'Tag created successfully.',
+        message: "Tag created successfully.",
         createdTag: {
           _id: result._id,
           name: result.name,
           request: {
-            type: 'POST',
+            type: "POST",
             url: `http://localhost:3000/tags/${result._id}`,
           },
         },
@@ -67,7 +73,7 @@ exports.tags_update_tag = (req, res, next) => {
       if (result) {
         res.status(200).json(result);
       } else {
-        res.status(404).json({ message: 'Requested tag ID does not exist.' });
+        res.status(404).json({ message: "Requested tag ID does not exist." });
       }
     })
     .catch((error) => {
@@ -86,7 +92,7 @@ exports.tags_delete_tag = (req, res, next) => {
           message: `Tag with ID ${id} has been successfully deleted.`,
         });
       } else {
-        res.status(404).json({ message: 'Requested tag ID does not exist.' });
+        res.status(404).json({ message: "Requested tag ID does not exist." });
       }
     })
     .catch((error) => {
