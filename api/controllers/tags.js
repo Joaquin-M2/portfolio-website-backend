@@ -7,22 +7,22 @@ exports.tags_get_all = (req, res, next) => {
     .then((result) => {
       const response = {
         count: result.length,
-        tags: result.map((tag) => ({
-          _id: tag._id,
-          name: tag.name,
-          request: {
-            type: "GET",
-            url: `http://localhost:3000/tags/${tag._id}`,
-          },
-        })),
+        tags: result
+          .map((tag) => ({
+            _id: tag._id,
+            name: tag.name,
+            request: {
+              type: "GET",
+              url: `http://localhost:3000/tags/${tag._id}`,
+            },
+          }))
+          .sort((a, b) => {
+            if (a.name.toUpperCase() < b.name.toUpperCase()) {
+              return -1;
+            }
+          }),
       };
       if (result) {
-        const orderedResponse = response.tags.sort((a, b) => {
-          if (a.name.toUpperCase() < b.name.toUpperCase()) {
-            return -1;
-          }
-        });
-        console.log(orderedResponse);
         res.status(200).json(response);
       } else {
         res.status(404).json({ message: "Requested tag ID does not exist." });
