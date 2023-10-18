@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
-const ToolModel = require('../models/tool');
+const mongoose = require("mongoose");
+const ToolModel = require("../models/tool");
 
 exports.tools_get_all = (req, res, next) => {
   ToolModel.find()
     //.exec()
-    .populate('tags', 'name')
+    .populate("tags", "name")
     .then((result) => {
       const response = {
         count: result.length,
@@ -12,11 +12,15 @@ exports.tools_get_all = (req, res, next) => {
           _id: tool._id,
           title: tool.title,
           description: tool.description,
-          tags: tool.tags,
+          tags: tool.tags.sort((a, b) => {
+            if (a.name.toUpperCase() < b.name.toUpperCase()) {
+              return -1;
+            }
+          }),
           iconUrl: tool.iconUrl || null,
           url: tool.url,
           request: {
-            type: 'GET',
+            type: "GET",
             url: `http://localhost:3000/tools/${tool._id}`,
           },
         })),
@@ -24,7 +28,7 @@ exports.tools_get_all = (req, res, next) => {
       if (result) {
         res.status(200).json(response);
       } else {
-        res.status(404).json({ message: 'Requested tool ID does not exist.' });
+        res.status(404).json({ message: "Requested tool ID does not exist." });
       }
     })
     .catch((error) => {
@@ -46,7 +50,7 @@ exports.tools_create_tool = (req, res, next) => {
     .save()
     .then((result) => {
       res.status(201).json({
-        message: 'Tool created successfully.',
+        message: "Tool created successfully.",
         createdTool: {
           _id: result._id,
           title: result.title,
@@ -54,7 +58,7 @@ exports.tools_create_tool = (req, res, next) => {
           tags: result.tags,
           iconUrl: result.iconUrl || null,
           request: {
-            type: 'POST',
+            type: "POST",
             url: `http://localhost:3000/tools/${result._id}`,
           },
         },
@@ -79,7 +83,7 @@ exports.tools_update_tool = (req, res, next) => {
       if (result) {
         res.status(200).json(result);
       } else {
-        res.status(404).json({ message: 'Requested tool ID does not exist.' });
+        res.status(404).json({ message: "Requested tool ID does not exist." });
       }
     })
     .catch((error) => {
@@ -98,7 +102,7 @@ exports.tools_delete_tool = (req, res, next) => {
           message: `Tool with ID ${id} has been successfully deleted.`,
         });
       } else {
-        res.status(404).json({ message: 'Requested tool ID does not exist.' });
+        res.status(404).json({ message: "Requested tool ID does not exist." });
       }
     })
     .catch((error) => {
