@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-const UserModel = require('../models/user');
+const UserModel = require("../models/user");
 
 exports.users_signup_user = (req, res, next) => {
   UserModel.find({ email: req.body.email })
@@ -10,7 +10,7 @@ exports.users_signup_user = (req, res, next) => {
     .then((user) => {
       if (user.length >= 1) {
         return res.status(409).json({
-          message: 'Email address is already used for another user.',
+          message: "Email address is already used for another user.",
         });
       } else {
         bcrypt.hash(req.body.password, 10, (error, hash) => {
@@ -29,7 +29,7 @@ exports.users_signup_user = (req, res, next) => {
               .save()
               .then((result) => {
                 res.status(201).json({
-                  message: 'User created successfully.',
+                  message: "User created successfully.",
                 });
               })
               .catch((error) => {
@@ -47,13 +47,13 @@ exports.users_login_user = (req, res, next) => {
     .then((user) => {
       if (user.length < 1) {
         return res.status(401).json({
-          message: 'Auth failed.',
+          message: "⛔ User not found ⛔",
         });
       }
       bcrypt.compare(req.body.password, user[0].password, (error, result) => {
         if (error) {
           return res.status(401).json({
-            message: 'Auth failed.',
+            message: "⛔ Wrong credentials ⛔",
           });
         }
         if (result) {
@@ -63,20 +63,23 @@ exports.users_login_user = (req, res, next) => {
               userId: user[0]._id,
             },
             process.env.JWT_KEY,
-            { expiresIn: '1h' }
+            { expiresIn: "1h" }
           );
           return res.status(200).json({
-            message: 'Auth succeeded.',
+            message: "✅ Logged in! ✅",
             token: jwtToken,
           });
         }
         return res.status(401).json({
-          message: 'Auth failed.',
+          message: "⛔ Wrong credentials ⛔",
         });
       });
     })
     .catch((error) => {
-      res.status(500).json({ error });
+      res.status(500).json({
+        error,
+        message: "🤔 Something went wrong. Please, try it again later 🤔",
+      });
     });
 };
 
@@ -90,7 +93,7 @@ exports.users_delete_user = (req, res, next) => {
           message: `User with id ${id} has been successfully deleted.`,
         });
       } else {
-        res.status(404).json({ message: 'Requested user ID does not exist.' });
+        res.status(404).json({ message: "Requested user ID does not exist." });
       }
     })
     .catch((error) => {
