@@ -10,7 +10,7 @@ exports.users_signup_user = (req, res, next) => {
     .then((user) => {
       if (user.length >= 1) {
         return res.status(409).json({
-          message: "Email address is already used for another user.",
+          message: "⛔ Email address is already used by another user ⛔",
         });
       } else {
         bcrypt.hash(req.body.password, 10, (error, hash) => {
@@ -29,7 +29,7 @@ exports.users_signup_user = (req, res, next) => {
               .save()
               .then((result) => {
                 res.status(201).json({
-                  message: "User created successfully.",
+                  message: "✅ User created successfully ✅",
                 });
               })
               .catch((error) => {
