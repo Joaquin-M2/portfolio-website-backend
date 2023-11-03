@@ -99,13 +99,16 @@ exports.tools_delete_tool = (req, res, next) => {
       if (result) {
         res.status(200).json({
           ...result,
-          message: `Tool with ID ${id} has been successfully deleted.`,
+          message: "✅ Tool successfully deleted ✅",
         });
       } else {
-        res.status(404).json({ message: "Requested tool ID does not exist." });
+        res.status(404).json({ message: "⛔ This tool does not exist ⛔" });
       }
     })
     .catch((error) => {
-      res.status(500).json({ error });
+      res.status(500).json({
+        error,
+        message: "🤔 Something went wrong. Please, try it again later 🤔",
+      });
     });
 };
