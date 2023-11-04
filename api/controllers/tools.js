@@ -8,22 +8,24 @@ exports.tools_get_all = (req, res, next) => {
     .then((result) => {
       const response = {
         count: result.length,
-        tools: result.map((tool) => ({
-          _id: tool._id,
-          title: tool.title,
-          description: tool.description,
-          tags: tool.tags.sort((a, b) => {
-            if (a.name.toUpperCase() < b.name.toUpperCase()) {
-              return -1;
-            }
-          }),
-          iconUrl: tool.iconUrl || null,
-          url: tool.url,
-          request: {
-            type: "GET",
-            url: `http://localhost:3000/tools/${tool._id}`,
-          },
-        })),
+        tools: result
+          .map((tool) => ({
+            _id: tool._id,
+            title: tool.title,
+            description: tool.description,
+            tags: tool.tags.sort((a, b) => {
+              if (a.name.toUpperCase() < b.name.toUpperCase()) {
+                return -1;
+              }
+            }),
+            iconUrl: tool.iconUrl || null,
+            url: tool.url,
+            request: {
+              type: "GET",
+              url: `http://localhost:3000/tools/${tool._id}`,
+            },
+          }))
+          .reverse(),
       };
       if (result) {
         res.status(200).json(response);
