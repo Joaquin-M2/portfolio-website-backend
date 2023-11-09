@@ -38,6 +38,28 @@ exports.tools_get_all = (req, res, next) => {
     });
 };
 
+exports.tools_get_specific_tool = (req, res, next) => {
+  const id = req.params.toolId;
+  //const updateOperations = {};
+
+  /* for (const operations of req.body) {
+    updateOperations[operations.propName] = operations.value;
+  } */
+
+  ToolModel.findOne({ _id: id })
+    .exec()
+    .then((result) => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).json({ message: "Requested tool ID does not exist." });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
 exports.tools_create_tool = (req, res, next) => {
   const tool = new ToolModel({
     _id: new mongoose.Types.ObjectId(),
