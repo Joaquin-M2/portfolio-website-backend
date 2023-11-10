@@ -105,9 +105,11 @@ exports.tools_update_tool = (req, res, next) => {
     .exec()
     .then((result) => {
       if (result) {
-        res.status(200).json(result);
+        res.status(200).json({ message: "✅ Tool updated successfully ✅" });
       } else {
-        res.status(404).json({ message: "Requested tool ID does not exist." });
+        res
+          .status(404)
+          .json({ message: "⛔ Requested tool ID does not exist ⛔" });
       }
     })
     .catch((error) => {
