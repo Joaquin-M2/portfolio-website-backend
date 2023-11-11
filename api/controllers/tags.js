@@ -43,7 +43,7 @@ exports.tags_create_tag = (req, res, next) => {
     .save()
     .then((result) => {
       res.status(201).json({
-        message: "Tag created successfully.",
+        message: "✅ Tag created successfully ✅",
         createdTag: {
           _id: result._id,
           name: result.name,
@@ -71,7 +71,7 @@ exports.tags_update_tag = (req, res, next) => {
     .exec()
     .then((result) => {
       if (result) {
-        res.status(200).json(result);
+        res.status(200).json({ message: "✅ Tag updated successfully ✅" });
       } else {
         res.status(404).json({ message: "Requested tag ID does not exist." });
       }
