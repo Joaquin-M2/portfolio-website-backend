@@ -73,7 +73,9 @@ exports.tags_update_tag = (req, res, next) => {
       if (result) {
         res.status(200).json({ message: "✅ Tag updated successfully ✅" });
       } else {
-        res.status(404).json({ message: "Requested tag ID does not exist." });
+        res
+          .status(404)
+          .json({ message: "⛔ Requested tag ID does not exist ⛔" });
       }
     })
     .catch((error) => {
