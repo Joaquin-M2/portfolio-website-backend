@@ -112,6 +112,25 @@ exports.users_get_all = (req, res, next) => {
     });
 };
 
+exports.users_update_user = (req, res, next) => {
+  const id = req.params.userId;
+
+  UserModel.findOneAndUpdate({ _id: id }, { $set: { ...req.body } })
+    .exec()
+    .then((result) => {
+      if (result) {
+        res.status(200).json({ message: "✅ User updated successfully ✅" });
+      } else {
+        res
+          .status(404)
+          .json({ message: "⛔ Requested user ID does not exist ⛔" });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
 exports.users_delete_user = (req, res, next) => {
   const id = req.params.userId;
   UserModel.deleteOne({ _id: id })

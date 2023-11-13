@@ -11,6 +11,8 @@ router.post("/login", UsersController.users_login_user);
 
 router.get("/", checkAuth, UsersController.users_get_all);
 
+router.patch("/:userId", checkAuth, UsersController.users_update_user);
+
 router.delete("/:userId", checkAuth, UsersController.users_delete_user);
 
 module.exports = router;
