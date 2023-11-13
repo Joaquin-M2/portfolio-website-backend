@@ -127,7 +127,7 @@ exports.users_update_user = (req, res, next) => {
       }
     })
     .catch((error) => {
-      res.status(500).json({ error });
+      res.status(500).json({ error, message: `⛔ ${error.codeName} ⛔` });
     });
 };
 
