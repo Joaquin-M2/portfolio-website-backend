@@ -83,6 +83,35 @@ exports.users_login_user = (req, res, next) => {
     });
 };
 
+exports.users_get_all = (req, res, next) => {
+  UserModel.find()
+    .exec()
+    .then((result) => {
+      const response = {
+        count: result.length,
+        users: result
+          .map((user) => ({
+            _id: user._id,
+            email: user.email,
+            role: user.role,
+          }))
+          .sort((a, b) => {
+            if (a.email.toLowerCase() < b.email.toLowerCase()) {
+              return -1;
+            }
+          }),
+      };
+      if (result) {
+        res.status(200).json(response);
+      } else {
+        res.status(404).json({ message: "⛔ Error retrieving users ⛔" });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
 exports.users_delete_user = (req, res, next) => {
   const id = req.params.userId;
   UserModel.deleteOne({ _id: id })
