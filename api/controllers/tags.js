@@ -84,15 +84,34 @@ exports.tags_update_tag = (req, res, next) => {
     updateOperations[operations.propName] = operations.value;
   } */
 
-  TagModel.findOneAndUpdate({ _id: id }, { $set: { ...req.body } })
+  TagModel.find()
     .exec()
     .then((result) => {
-      if (result) {
-        res.status(200).json({ message: "✅ Tag updated successfully ✅" });
+      if (
+        !result.some(
+          (tag) => tag.name.toLowerCase() === req.body.name.toLowerCase()
+        )
+      ) {
+        TagModel.findOneAndUpdate({ _id: id }, { $set: { ...req.body } })
+          .exec()
+          .then((result) => {
+            if (result) {
+              res
+                .status(200)
+                .json({ message: "✅ Tag updated successfully ✅" });
+            } else {
+              res
+                .status(404)
+                .json({ message: "⛔ Requested tag ID does not exist ⛔" });
+            }
+          })
+          .catch((error) => {
+            res.status(500).json({ error });
+          });
       } else {
         res
           .status(404)
-          .json({ message: "⛔ Requested tag ID does not exist ⛔" });
+          .json({ message: "⛔ A tag with that name already exists ⛔" });
       }
     })
     .catch((error) => {
