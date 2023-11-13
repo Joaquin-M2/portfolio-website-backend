@@ -39,20 +39,37 @@ exports.tags_create_tag = (req, res, next) => {
     name: req.body.name,
   });
 
-  tag
-    .save()
+  TagModel.find()
+    .exec()
     .then((result) => {
-      res.status(201).json({
-        message: "✅ Tag created successfully ✅",
-        createdTag: {
-          _id: result._id,
-          name: result.name,
-          request: {
-            type: "POST",
-            url: `http://localhost:3000/tags/${result._id}`,
-          },
-        },
-      });
+      if (
+        !result.some(
+          (tag) => tag.name.toLowerCase() === req.body.name.toLowerCase()
+        )
+      ) {
+        tag
+          .save()
+          .then((result) => {
+            res.status(201).json({
+              message: "✅ Tag created successfully ✅",
+              createdTag: {
+                _id: result._id,
+                name: result.name,
+                request: {
+                  type: "POST",
+                  url: `http://localhost:3000/tags/${result._id}`,
+                },
+              },
+            });
+          })
+          .catch((error) => {
+            res.status(500).json({ error });
+          });
+      } else {
+        res
+          .status(404)
+          .json({ message: "⛔ A tag with that name already exists ⛔" });
+      }
     })
     .catch((error) => {
       res.status(500).json({ error });
