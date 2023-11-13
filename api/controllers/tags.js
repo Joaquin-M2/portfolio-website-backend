@@ -85,19 +85,29 @@ exports.tags_update_tag = (req, res, next) => {
 
 exports.tags_delete_tag = (req, res, next) => {
   const id = req.params.tagId;
-  TagModel.deleteOne({ _id: id })
+  let tagName;
+  TagModel.findOne({ _id: id })
     .exec()
     .then((result) => {
-      if (result) {
-        res.status(200).json({
-          ...result,
-          message: `Tag with ID ${id} has been successfully deleted.`,
-        });
-      } else {
-        res.status(404).json({ message: "Requested tag ID does not exist." });
-      }
+      tagName = result.name;
     })
-    .catch((error) => {
-      res.status(500).json({ error });
+    .then(() => {
+      TagModel.deleteOne({ _id: id })
+        .exec()
+        .then((result) => {
+          if (result) {
+            res.status(200).json({
+              ...result,
+              message: `✅ Tag "${tagName}" was deleted ✅`,
+            });
+          } else {
+            res
+              .status(404)
+              .json({ message: "⛔ Requested tag ID does not exist ⛔" });
+          }
+        })
+        .catch((error) => {
+          res.status(500).json({ error });
+        });
     });
 };
