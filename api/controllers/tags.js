@@ -67,7 +67,7 @@ exports.tags_create_tag = (req, res, next) => {
           });
       } else {
         res
-          .status(404)
+          .status(409)
           .json({ message: "⛔ A tag with that name already exists ⛔" });
       }
     })
@@ -110,7 +110,7 @@ exports.tags_update_tag = (req, res, next) => {
           });
       } else {
         res
-          .status(404)
+          .status(409)
           .json({ message: "⛔ A tag with that name already exists ⛔" });
       }
     })
