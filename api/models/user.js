@@ -11,6 +11,12 @@ const userSchema = mongoose.Schema({
   },
   password: { type: String, required: true },
   role: { type: String, required: true, default: "user" },
+  favoriteTools: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tool",
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", userSchema);
