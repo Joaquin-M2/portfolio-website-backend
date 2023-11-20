@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 
+const iconsRoutes = require("./api/routes/icons");
 const tagsRoutes = require("./api/routes/tags");
 const toolsRoutes = require("./api/routes/tools");
 const usersRoutes = require("./api/routes/users");
@@ -40,6 +41,7 @@ app.use((req, res, next) => {
 
 // ENDPOINTS
 
+app.use("/icons", iconsRoutes);
 app.use("/tags", tagsRoutes);
 app.use("/tools", toolsRoutes);
 app.use("/user", usersRoutes);
