@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const toolSchema = mongoose.Schema({
+const tagSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   name: { type: String, required: true },
 });
 
-module.exports = mongoose.model('Tag', toolSchema);
+module.exports = mongoose.model("Tag", tagSchema);
