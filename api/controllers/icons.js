@@ -81,27 +81,22 @@ exports.icons_create_icon = (req, res, next) => {
 
 exports.icons_update_icon = (req, res, next) => {
   const id = req.params.iconId;
-  //const updateOperations = {};
-
-  /* for (const operations of req.body) {
-    updateOperations[operations.propName] = operations.value;
-  } */
 
   IconModel.find()
     .exec()
     .then((result) => {
+      const iconToUpdate = result.find((icon) => icon._id.toString() === id);
       if (
-        !result.some(
-          (icon) => icon.name.toLowerCase() === req.body.name.toLowerCase()
-        )
+        iconToUpdate.name.toLowerCase() !== req.body.name.toLowerCase() ||
+        iconToUpdate.url.toLowerCase() !== req.body.url.toLowerCase()
       ) {
         IconModel.findOneAndUpdate({ _id: id }, { $set: { ...req.body } })
           .exec()
           .then((result) => {
             if (result) {
-              res
-                .status(200)
-                .json({ message: "✅ Icon updated successfully ✅" });
+              res.status(200).json({
+                message: `✅ Icon "${req.body.name}" updated successfully ✅`,
+              });
             } else {
               res
                 .status(404)
@@ -112,9 +107,9 @@ exports.icons_update_icon = (req, res, next) => {
             res.status(500).json({ error });
           });
       } else {
-        res
-          .status(409)
-          .json({ message: "⛔ An icon with that name already exists ⛔" });
+        res.status(409).json({
+          message: "⛔ An icon with that name and url already exists ⛔",
+        });
       }
     })
     .catch((error) => {
