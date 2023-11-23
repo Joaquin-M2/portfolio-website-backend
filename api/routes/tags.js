@@ -3,14 +3,14 @@ const router = express.Router();
 
 const TagsController = require("../controllers/tags");
 
-const checkAuth = require("../middleware/check-auth");
+const checkAuthAdmin = require("../middleware/check-auth-admin");
 
 router.get("/", TagsController.tags_get_all);
 
-router.post("/", checkAuth, TagsController.tags_create_tag);
+router.post("/", checkAuthAdmin, TagsController.tags_create_tag);
 
-router.patch("/:tagId", checkAuth, TagsController.tags_update_tag);
+router.patch("/:tagId", checkAuthAdmin, TagsController.tags_update_tag);
 
-router.delete("/:tagId", checkAuth, TagsController.tags_delete_tag);
+router.delete("/:tagId", checkAuthAdmin, TagsController.tags_delete_tag);
 
 module.exports = router;
