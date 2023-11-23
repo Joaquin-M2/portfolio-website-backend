@@ -74,7 +74,7 @@ exports.tools_create_tool = (req, res, next) => {
     .save()
     .then((result) => {
       res.status(201).json({
-        message: "Tool created successfully.",
+        message: "✅ Tool created successfully ✅",
         createdTool: {
           _id: result._id,
           title: result.title,
