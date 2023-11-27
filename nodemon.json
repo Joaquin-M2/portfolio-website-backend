@@ -1,6 +1,0 @@
-{
-  "env": {
-    "MONGODB_ATLAS_PASSWORD": "Joaquin-M2-password",
-    "JWT_KEY": "secret-key-for-jwt-generation"
-  }
-}
