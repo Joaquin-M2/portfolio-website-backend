@@ -1,3 +1,4 @@
+require("dotenv").config();
 const requestsLogger = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
