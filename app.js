@@ -41,11 +41,11 @@ app.use((req, res, next) => {
 });
 
 // ENDPOINTS
-
-app.use("/icons", iconsRoutes);
-app.use("/tags", tagsRoutes);
-app.use("/tools", toolsRoutes);
-app.use("/user", usersRoutes);
+const prefix = "/api/v1";
+app.use(`${prefix}/icons`, iconsRoutes);
+app.use(`${prefix}/tags`, tagsRoutes);
+app.use(`${prefix}/tools`, toolsRoutes);
+app.use(`${prefix}/user`, usersRoutes);
 
 // ERROR HANDLING FOR INVALID REQUESTS
 
