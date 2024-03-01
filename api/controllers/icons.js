@@ -5,24 +5,37 @@ exports.icons_get_all = (req, res, next) => {
   IconModel.find()
     .exec()
     .then((result) => {
+      let sortedIcons = result
+        .map((icon) => ({
+          _id: icon._id,
+          name: icon.name,
+          url: icon.url,
+          request: {
+            type: "GET",
+            url: `http://localhost:3000/icons/${icon._id}`,
+          },
+        }))
+        .sort((a, b) => {
+          if (a.name.toUpperCase() < b.name.toUpperCase()) {
+            return -1;
+          }
+        });
+
+      const noImageIcon = sortedIcons.find(
+        (icon) => icon._id.toString() === "655c3872473ea18c182edf70"
+      );
+
+      const noImageIconIndex = sortedIcons.findIndex(
+        (icon) => icon._id === noImageIcon._id
+      );
+      sortedIcons.splice(noImageIconIndex, 1);
+      sortedIcons.unshift(noImageIcon);
+
       const response = {
         count: result.length,
-        icons: result
-          .map((icon) => ({
-            _id: icon._id,
-            name: icon.name,
-            url: icon.url,
-            request: {
-              type: "GET",
-              url: `http://localhost:3000/icons/${icon._id}`,
-            },
-          }))
-          .sort((a, b) => {
-            if (a.name.toUpperCase() < b.name.toUpperCase()) {
-              return -1;
-            }
-          }),
+        icons: sortedIcons,
       };
+
       if (result) {
         res.status(200).json(response);
       } else {
