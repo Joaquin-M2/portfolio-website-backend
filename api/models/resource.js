@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const toolSchema = mongoose.Schema({
+const resourceSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   title: { type: String, required: true },
   description: { type: String, required: true },
   tags: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Tag',
+      ref: "Tag",
       required: true,
     },
   ],
@@ -16,4 +16,4 @@ const toolSchema = mongoose.Schema({
   url: { type: String, required: true },
 });
 
-module.exports = mongoose.model('Tool', toolSchema);
+module.exports = mongoose.model("Resource", resourceSchema);

@@ -18,7 +18,7 @@
     <a href="https://github.com/Joaquin-M2/portfolio-website"><strong>Explore the frontend »</strong></a>
     <br />
     <br />
-    <a href="https://portfolio-website-joaquin-m2.vercel.app/tools">Visit Website</a>
+    <a href="https://portfolio-website-joaquin-m2.vercel.app/resources">Visit Website</a>
     ·
     <a href="https://portfolio-website-joaquin-m2.vercel.app/contact">Report Bug</a>
   </p>
@@ -35,7 +35,7 @@
         <a href="#endpoints">Endpoints</a>
         <ul>
             <li><a href="#users">Users</a></li>
-            <li><a href="#tools">Tools</a></li>
+            <li><a href="#resources">Resources</a></li>
             <li><a href="#tags">Tags</a></li>
             <li><a href="#icons">Icons</a></li>
       </ul>
@@ -56,7 +56,7 @@
 
 ## About The Project
 
-<p>This project was originally born as a need for the "Tools" section of my personal website. Soon after, I started to use it as a small playground to experiment with backend code, such as the different alternatives to authenticate users. In the future it will also house the backend code for any project in my portfolio that may require it.</p>
+<p>This project was originally born as a need for the "Resources" section of my personal website. Soon after, I started to use it as a small playground to experiment with backend code, such as the different alternatives to authenticate users. In the future it will also house the backend code for any project in my portfolio that may require it.</p>
 
 <p>Therefore, this repository is not intended to show any kind of extraordinary backend code but just the minimum required by some functionalities in the frontend of my portfolio website. Nevertheless, I try to apply a clear architecture and best practices on it, so don't hesitate to let me know if you see anything that can be improved :slightly_smiling_face:.</p>
 
@@ -66,11 +66,11 @@
 
 ## Endpoints
 
-Currently, the backend code in this repository creates 4 different endpoints: Users, Tools, Tags and Icons. Down below you can find a brief description for each of them, even though they will be documented in the future following the <a href="https://www.openapis.org/" target="_blank">OpenAPI Specification</a>.
+Currently, the backend code in this repository creates 4 different endpoints: Users, Resources, Tags and Icons. Down below you can find a brief description for each of them, even though they will be documented in the future following the <a href="https://www.openapis.org/" target="_blank">OpenAPI Specification</a>.
 
 ### Users
 
-Required for letting any visitor have their own account and save their favorite tools in the "Tools" section.
+Required for letting any visitor have their own account and save their favorite resources in the "Resources" section.
 
 Some requests are aimed to most users (e.g. POSTing into /user/signup and /user/login) whilst some others are for administrators (e.g. PATCHing user accounts to update their role or DELETEing their account).
 
@@ -78,9 +78,9 @@ For more information visit the related controller and route files.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Tools
+### Resources
 
-Required for GETting one or every tool, creating (POSTing), updating (PATCHing) and DELETEing a tool.
+Required for GETting one or every resource, creating (POSTing), updating (PATCHing) and DELETEing a resource.
 
 Users without the "admin" role can only perform GET requests.
 
@@ -90,7 +90,7 @@ For more information visit the related controller and route files.
 
 ### Tags
 
-Required for managing the tags that are used to filter tools.
+Required for managing the tags that are used to filter resources.
 
 Every user can GET every tag. Only admin users can create (POST), update (PATCH) and delete (DELETE) tags.
 
@@ -100,9 +100,9 @@ For more information visit the related controller and route files.
 
 ### Icons
 
-Required for managing the icons that can be used for each tool.
+Required for managing the icons that can be used for each resource.
 
-The files for these icons are stored in this repository (/public/tools-icons) and their URL is used when creating a new icon in the database.
+The files for these icons are stored in this repository (/public/resources-icons) and their URL is used when creating a new icon in the database.
 
 Every user has permissions to GET every icon. Only admin users can create (POST), update (PATCH) and delete (DELETE) icons.
 
@@ -179,7 +179,7 @@ You will also need to set up a database such as MongoDB and set the different en
 - [ ] Document endpoints using the OpenAPI Specification
 - [ ] Create tests for every endpoint
   - [ ] Users
-  - [ ] Tools
+  - [ ] Resources
   - [ ] Tags
   - [ ] Icons
 - [ ] Use TypeScript

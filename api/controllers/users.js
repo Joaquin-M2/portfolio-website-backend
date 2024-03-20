@@ -69,7 +69,7 @@ exports.users_login_user = (req, res, next) => {
           return res.status(200).json({
             message: "✅ Logged in! ✅",
             token: jwtToken,
-            favoriteTools: [...user[0].favoriteTools],
+            favoriteResources: [...user[0].favoriteResources],
           });
         }
         return res.status(401).json({

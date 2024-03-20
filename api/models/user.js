@@ -11,10 +11,10 @@ const userSchema = mongoose.Schema({
   },
   password: { type: String, required: true },
   role: { type: String, required: true, default: "user" },
-  favoriteTools: [
+  favoriteResources: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Tool",
+      ref: "Resource",
     },
   ],
 });

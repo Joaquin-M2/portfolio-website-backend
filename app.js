@@ -8,7 +8,7 @@ const app = express();
 
 const iconsRoutes = require("./api/routes/icons");
 const tagsRoutes = require("./api/routes/tags");
-const toolsRoutes = require("./api/routes/tools");
+const resourcesRoutes = require("./api/routes/resources");
 const usersRoutes = require("./api/routes/users");
 
 // DATABASE CONNECTION
@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 const prefix = "/api/v1";
 app.use(`${prefix}/icons`, iconsRoutes);
 app.use(`${prefix}/tags`, tagsRoutes);
-app.use(`${prefix}/tools`, toolsRoutes);
+app.use(`${prefix}/resources`, resourcesRoutes);
 app.use(`${prefix}/user`, usersRoutes);
 
 // ERROR HANDLING FOR INVALID REQUESTS
